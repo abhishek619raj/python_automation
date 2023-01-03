@@ -14296,3 +14296,22 @@ console.warn: LoginRecipes: "Falling back to a synchronous message for: https://
 JavaScript error: , line 0: uncaught exception: undefined
 1672670039381	Marionette	INFO	Stopped listening on port 32897
 Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1672746054077	geckodriver	INFO	Listening on 127.0.0.1:48283
+1672746055081	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileVMOACO"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1672746056031	Marionette	INFO	Marionette enabled
+1672746056037	Marionette	INFO	Listening on port 44549
+Read port: 44549
+1672746056119	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileVMOACO/search.json.mozlz4", (void 0)))
+JavaScript error: jar:file:///usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi!/experiment-apis/matchPatterns.js, line 18: NS_ERROR_MALFORMED_URI: 
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://login.microsoftonline.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://login.microsoftonline.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://login.microsoftonline.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://login.microsoftonline.com."
+1672746075703	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1672746391254	Marionette	INFO	Stopped listening on port 44549
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
