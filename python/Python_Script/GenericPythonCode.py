@@ -1,12 +1,10 @@
-import os
-import csv
-import glob
 import time
 import shutil
 from O365 import Account
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from openpyxl.workbook import Workbook
+from webdriver_manager.chrome import ChromeDriverManager
 
 credentials = (
     "5f2bf0de-5d68-4c0a-833f-b32899de4579",
@@ -19,9 +17,7 @@ account = Account(
 )
 
 if account.authenticate():
-    driver = webdriver.Firefox(
-        executable_path="/home/abhishekraj/python/Python_Script/geckodriver"
-    )
+    driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(
         "https://security.microsoft.com/securitypoliciesandrules?tid=d4295056-baca-4708-8c60-0351c0fb01db"
     )
@@ -34,7 +30,8 @@ if account.authenticate():
     pswd = driver.find_element(By.NAME, "passwd")
     pswd.send_keys("12345@Fdsa")
     time.sleep(4)
-    signIn = driver.find_element(By.XPATH, "//input[@id='idSIButton9']").click()
+    signIn = driver.find_element(
+        By.XPATH, "//input[@id='idSIButton9']").click()
     time.sleep(4)
     loginIn = driver.find_element(By.ID, "idSIButton9").click()
     time.sleep(10)
@@ -42,7 +39,9 @@ if account.authenticate():
         By.XPATH, "//a[normalize-space()='Threat policies']"
     ).click()
     time.sleep(4)
-    ############firstPolicy#############
+
+    ############ firstPolicy#############
+
     policy_number_first = driver.find_element(
         By.XPATH, "//button[normalize-space()='Anti-phishing']"
     ).click()
@@ -51,7 +50,7 @@ if account.authenticate():
         By.CLASS_NAME, "ms-DetailsRow-fields"
     )
     wb = Workbook()
-    first_filepath="/home/abhishekraj/python/Python_Script/all_policy/Anti-phishing.xlsx"
+    FIRST_FILE = "./all_policy/Anti-phishing.xlsx"
     for data in policy_number_first_data:
         data.click()
         time.sleep(4)
@@ -65,21 +64,24 @@ if account.authenticate():
                 ws1.append(row)
         time.sleep(4)
         close_btn = driver.find_element(
-                By.XPATH, "//span[contains(text(),'Close')]"
-            ).click()
-    wb.save(filename = first_filepath)
+            By.XPATH, "//span[contains(text(),'Close')]"
+        ).click()
+    wb.save(filename=FIRST_FILE)
     time.sleep(4)
     driver.back()
     time.sleep(4)
-    ############secondPolicy#############
+
+    ############ secondPolicy#############
+
     inside_second_Policy_Folder = driver.find_element(
         By.XPATH, "//button[normalize-space()='Anti-spam']"
-        ).click()
+    ).click()
     time.sleep(4)
-    second_Policy_Item = driver.find_elements(By.CLASS_NAME, "ms-DetailsRow-fields")
+    second_Policy_Item = driver.find_elements(
+        By.CLASS_NAME, "ms-DetailsRow-fields")
     time.sleep(4)
     wb = Workbook()
-    second_filepath="/home/abhishekraj/python/Python_Script/all_policy/Anti-spam.xlsx"
+    SECOND_FILE = "./all_policy/Anti-spam.xlsx"
     for data in second_Policy_Item:
         ws1 = wb.create_sheet(data.text.splitlines()[0])
         data.click()
@@ -92,7 +94,7 @@ if account.authenticate():
             sav_data = [res.text.splitlines()]
             for row in sav_data:
                 ws1.append(row)
-        wb.save(filename = second_filepath)
+        wb.save(filename=SECOND_FILE)
         time.sleep(3)
         try:
             button = driver.find_element(
@@ -116,17 +118,18 @@ if account.authenticate():
                     for new_res in items_:
                         second_policy_ = new_res.text.splitlines()
                     semi_final.append(second_policy_)
-                    save_data = [i.text.splitlines(),second_policy_]
-                    a = "\uea3a"
+                    save_data = [i.text.splitlines(), second_policy_]
+                    A = "\uea3a"
                     try:
-                        for a in second_policy_:
+                        for A in second_policy_:
                             second_policy_.remove("\uea3a")
                     except:
                         print()
-                    flat_list = [item for sublist in save_data for item in sublist]
+                    flat_list = [
+                        item for sublist in save_data for item in sublist]
                     print(flat_list)
                     ws1.append(flat_list)
-                    wb.save(filename = second_filepath)
+                    wb.save(filename=SECOND_FILE)
                     semi_final.append(second_policy_)
                     done_btn = driver.find_element(
                         By.XPATH, "//button[@aria-label='Done']"
@@ -147,16 +150,17 @@ if account.authenticate():
     time.sleep(4)
     driver.back()
     time.sleep(4)
-    ###########thirdPolicy################
-    third_filepath="/home/abhishekraj/python/Python_Script/all_policy/Anti-malware.xlsx"
 
+    ########### thirdPolicy################
+
+    THIRD_FILE = "./all_policy/Anti-malware.xlsx"
     policy_third = driver.find_element(
         By.XPATH, "//button[normalize-space()='Anti-malware']"
-        ).click()
+    ).click()
     time.sleep(4)
     data_policy_third_number_policy = driver.find_elements(
         By.CLASS_NAME, "ms-DetailsRow-fields"
-        )
+    )
     wb = Workbook()
     for third_data in data_policy_third_number_policy:
         ws1 = wb.create_sheet(third_data.text.splitlines()[0])
@@ -164,7 +168,7 @@ if account.authenticate():
         time.sleep(4)
         data_policy_third_number = driver.find_elements(
             By.CLASS_NAME, "ms-MetaDataItem"
-            )
+        )
         for data in data_policy_third_number:
             sav_data = [data.text.splitlines()]
             for row in sav_data:
@@ -173,7 +177,7 @@ if account.authenticate():
         close_btn = driver.find_element(
             By.XPATH, "//span[contains(text(),'Close')]"
         ).click()
-    wb.save(filename = third_filepath)
+    wb.save(filename=THIRD_FILE)
     driver.back()
     time.sleep(4)
     secure_Score = driver.find_element(
@@ -188,5 +192,6 @@ if account.authenticate():
         By.XPATH, "//span[contains(text(),'Export')]"
     ).click()
     time.sleep(4)
-    shutil.copy2('/home/abhishekraj/Downloads/Microsoft Secure Score - Microsoft 365 security.csv', '/home/abhishekraj/python/Python_Script/secure_score/Microsoft Secure Score - Microsoft 365 security.csv')
+    shutil.copy2('/home/abhishekraj/Downloads/Microsoft Secure Score - Microsoft 365 security.csv',
+                 './secure_score/Microsoft Secure Score - Microsoft 365 security.csv')
     driver.quit()
